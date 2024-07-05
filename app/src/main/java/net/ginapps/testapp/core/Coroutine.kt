@@ -22,5 +22,6 @@ fun <T> CoroutineContext.async(
 ): Deferred<T> = CoroutineScope(this).async(context) { block() }
 
 suspend fun <T> CoroutineContext.execute(
+    context: CoroutineContext = EmptyCoroutineContext,
     block: suspend CoroutineScope.() -> T,
-) = withContext(this, block)
+) = withContext(this + context, block)

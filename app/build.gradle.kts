@@ -21,8 +21,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField("String", "wallet_project_id", "\"dc388a048b30379cb2d91efc08448077\"")
     }
-
+    // TODO: use different flavors staging and prod
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -41,6 +42,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     packaging {
         resources {
@@ -64,6 +66,8 @@ dependencies {
     implementation(libs.logs)
     implementation(libs.bundles.hilt)
     ksp(libs.hilt.kapt)
+    implementation(platform(libs.wallet.bom))
+    implementation(libs.bundles.wallet)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -2,13 +2,13 @@ package net.ginapps.testapp.screen.launch
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import net.ginapps.testapp.core.BaseActivity
 import net.ginapps.testapp.core.ViewState
 import net.ginapps.testapp.screen.signin.SignInActivity
 
-class LaunchActivity : ComponentActivity() {
+class LaunchActivity : BaseActivity() {
 
     private val viewModel: LaunchViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
