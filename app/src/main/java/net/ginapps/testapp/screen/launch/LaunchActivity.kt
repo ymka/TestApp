@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import net.ginapps.testapp.core.BaseActivity
 import net.ginapps.testapp.core.ViewState
+import net.ginapps.testapp.screen.account.HomeActivity
 import net.ginapps.testapp.screen.signin.SignInActivity
 
 class LaunchActivity : BaseActivity() {
@@ -24,7 +25,7 @@ class LaunchActivity : BaseActivity() {
                                 Intent(this, SignInActivity::class.java)
                             }
                             is Route.Home -> {
-                                Intent(this, SignInActivity::class.java)
+                                Intent(this, HomeActivity::class.java)
                             }
                         }
 

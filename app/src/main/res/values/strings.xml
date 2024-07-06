@@ -3,6 +3,9 @@
     <string name="sig_in_screen_cta">Sign In</string>
     <string name="no_internet_error_message">No Internet Connection</string>
     <string name="common_error_message">Unknown Error</string>
+    <string name="logout_error_message">Cannot Logout. Try again</string>
     <string name="session_rejected">Session Rejected</string>
     <string name="ok">OK</string>
+    <string name="wallet_address">"Address: %1$s"</string>
+    <string name="logout">LogOut</string>
 </resources>

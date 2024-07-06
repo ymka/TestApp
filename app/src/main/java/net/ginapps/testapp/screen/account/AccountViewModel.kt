@@ -1,0 +1,46 @@
+package net.ginapps.testapp.screen.account
+
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import net.ginapps.testapp.core.BaseViewModel
+import net.ginapps.testapp.core.IoCoroutineContext
+import net.ginapps.testapp.core.onError
+import net.ginapps.testapp.data.UserAccount
+import net.ginapps.testapp.repository.ConnectionRepository
+import net.ginapps.testapp.repository.UserRepository
+
+@HiltViewModel
+class AccountViewModel @Inject constructor(
+    private val userRepository: UserRepository,
+    connectionRepository: ConnectionRepository,
+    ioCoroutineContext: IoCoroutineContext,
+) : BaseViewModel(connectionRepository, ioCoroutineContext) {
+    private val _address = MutableStateFlow("")
+    val address = _address.asStateFlow()
+
+    override fun launch() {
+        super.launch()
+        launchOnMain {
+            userRepository.account.collect {
+                when (it) {
+                    is UserAccount.Authorized -> {
+                        _address.value = it.address
+                    }
+                    is UserAccount.None -> {
+
+                    }
+                }
+            }
+        }
+    }
+
+    fun logOut() {
+        launchOnMain {
+            userRepository.logOut().onError {
+                showError(it)
+            }
+        }
+    }
+}

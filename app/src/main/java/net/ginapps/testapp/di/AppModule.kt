@@ -10,7 +10,9 @@ import net.ginapps.testapp.core.IoCoroutineContext
 import net.ginapps.testapp.core.MainCoroutineContext
 import net.ginapps.testapp.repository.ConnectionRepository
 import net.ginapps.testapp.repository.DefaultWeb3Repository
+import net.ginapps.testapp.repository.UserRepository
 import net.ginapps.testapp.repository.Web3Repository
+import net.ginapps.testapp.repository.Web3UserRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -36,4 +38,8 @@ object AppModule {
     @Singleton
     fun provideConnectionRepository(repository: DefaultWeb3Repository): ConnectionRepository =
         repository
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(io: IoCoroutineContext): UserRepository = Web3UserRepository(io)
 }

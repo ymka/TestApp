@@ -7,12 +7,15 @@ import kotlinx.coroutines.flow.StateFlow
 import net.ginapps.testapp.core.IoCoroutineContext
 import net.ginapps.testapp.core.StateViewModel
 import net.ginapps.testapp.core.ViewState
+import net.ginapps.testapp.data.UserAccount
 import net.ginapps.testapp.repository.ConnectionRepository
+import net.ginapps.testapp.repository.UserRepository
 import net.ginapps.testapp.usecase.AppInitUseCase
 
 @HiltViewModel
 class LaunchViewModel @Inject constructor(
     private val initUseCase: AppInitUseCase,
+    private val userRepository: UserRepository,
     connectionRepository: ConnectionRepository,
     ioCoroutineContext: IoCoroutineContext,
 ) : StateViewModel<Route>(connectionRepository, ioCoroutineContext) {
@@ -25,7 +28,14 @@ class LaunchViewModel @Inject constructor(
         super.launch()
         launchOnMain {
             executeOnIo { initUseCase.run() }
-            _state.value = ViewState.Success(Route.Sign)
+            userRepository.account.collect {
+                val route = when (it) {
+                    is UserAccount.Authorized -> Route.Home
+                    is UserAccount.None -> Route.Sign
+                }
+
+                _state.value = ViewState.Success(route)
+            }
         }
     }
 

@@ -31,11 +31,11 @@ fun SigInScreen(
     viewModel: SignInViewModel = hiltViewModel(),
 ) {
     BaseScreen(
+        viewModel = viewModel,
         errorState = viewModel.error
     ) { innerPadding ->
         var openBottomSheet by rememberSaveable { mutableStateOf(false) }
         val coroutineScope = rememberCoroutineScope()
-        viewModel.launch()
         if (viewModel.sessionRejected.collectAsState().value) {
             openBottomSheet = false
             AlertDialog(

@@ -68,6 +68,10 @@ class DefaultWeb3Repository(
         Timber.i("onSessionEvent: $sessionEvent")
     }
 
+    override fun onSessionEvent(sessionEvent: Modal.Model.Event) {
+        Timber.i("onSessionEvent: $sessionEvent")
+    }
+
     override fun onSessionExtend(session: Modal.Model.Session) {
         Timber.i("onSessionExtend: $session")
     }
