@@ -1,4 +1,4 @@
-package net.ginapps.testapp.screen.account
+package net.ginapps.testapp.screen.home.account
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

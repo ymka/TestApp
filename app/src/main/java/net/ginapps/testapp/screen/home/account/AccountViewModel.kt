@@ -1,4 +1,4 @@
-package net.ginapps.testapp.screen.account
+package net.ginapps.testapp.screen.home.account
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
