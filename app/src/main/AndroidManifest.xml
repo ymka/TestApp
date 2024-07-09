@@ -25,8 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screen.signin.SignInActivity" />
-        <activity android:name=".screen.home.HomeActivity"/>
+        <activity
+            android:name=".screen.signin.SignInActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".screen.home.HomeActivity"
+            android:noHistory="true" />
     </application>
 
 </manifest>

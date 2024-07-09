@@ -13,6 +13,7 @@ import net.ginapps.testapp.repository.Web3State
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val web3Repository: Web3Repository,
+    private val navigator: SigInNavigator,
     connectionRepository: ConnectionRepository,
     ioContext: IoCoroutineContext,
 ) : BaseViewModel(connectionRepository, ioContext) {
@@ -25,6 +26,9 @@ class SignInViewModel @Inject constructor(
         launchOnMain {
             web3Repository.state.collectLatest {
                 when (it) {
+                    is Web3State.SessionApproved -> {
+                        navigator.navigateTo(SignInDestination.Home)
+                    }
                     is Web3State.SessionRejected -> {
                         _sessionRejected.value = true
                     }

@@ -27,8 +27,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDefaultWeb3Repository(ioCoroutineContext: IoCoroutineContext) =
-        DefaultWeb3Repository(ioCoroutineContext)
+    fun provideDefaultWeb3Repository(
+        userRepository: UserRepository,
+        ioCoroutineContext: IoCoroutineContext,
+    ) = DefaultWeb3Repository(userRepository, ioCoroutineContext)
 
     @Provides
     @Singleton

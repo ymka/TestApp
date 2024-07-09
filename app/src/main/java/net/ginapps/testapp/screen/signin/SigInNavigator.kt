@@ -1,4 +1,4 @@
-package net.ginapps.testapp.screen.home
+package net.ginapps.testapp.screen.signin
 
 import android.content.Intent
 import androidx.compose.animation.EnterTransition
@@ -10,26 +10,25 @@ import androidx.navigation.compose.composable
 import net.ginapps.testapp.core.BaseActivity
 import net.ginapps.testapp.core.MainCoroutineContext
 import net.ginapps.testapp.core.launch
-import net.ginapps.testapp.screen.home.account.AccountScreen
-import net.ginapps.testapp.screen.signin.SignInActivity
+import net.ginapps.testapp.screen.home.HomeActivity
 
 @Composable
-fun HomeNavHost(navController: NavHostController, navigator: NavHostHomeNavigator) {
+fun SignInNavHost(navController: NavHostController, navigator: NavHostSigInNavigator) {
     NavHost(
         navController = navController,
-        startDestination = DestinationName.ACCOUNT,
+        startDestination = DestinationName.SIGN_IN,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None },
     ) {
-        composable(DestinationName.ACCOUNT) { AccountScreen() }
+        composable(DestinationName.SIGN_IN) { SigInScreen() }
     }
 
     navigator.destinationListener = { destination ->
-        if (destination == HomeDestination.SigIn) {
+        if (destination == SignInDestination.Home) {
             (navController.context as? BaseActivity)?.let {
-                it.startActivity(Intent(it.applicationContext, SignInActivity::class.java))
+                it.startActivity(Intent(it.applicationContext, HomeActivity::class.java))
             }
         } else {
             navController.navigate(destination.name)
@@ -39,16 +38,16 @@ fun HomeNavHost(navController: NavHostController, navigator: NavHostHomeNavigato
     navigator.goBackListener = { navController.popBackStack() }
 }
 
-sealed class HomeDestination(val name: String) {
+sealed class SignInDestination(val name: String) {
 
-    object Account : HomeDestination(DestinationName.ACCOUNT)
-    object SigIn : HomeDestination(DestinationName.SIGN_IN)
+    object SigIn : SignInDestination(DestinationName.SIGN_IN)
+    object Home : SignInDestination(DestinationName.HOME)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as HomeDestination
+        other as SignInDestination
 
         if (name != other.name) return false
 
@@ -61,21 +60,21 @@ sealed class HomeDestination(val name: String) {
 }
 
 private object DestinationName {
-    const val ACCOUNT = "account"
+    const val HOME = "account"
     const val SIGN_IN = "sig_in"
 }
 
-interface HomeNavigator {
-    fun navigateTo(destination: HomeDestination)
+interface SigInNavigator {
+    fun navigateTo(destination: SignInDestination)
     fun goBack()
 }
 
-class NavHostHomeNavigator(private val mainContext: MainCoroutineContext) : HomeNavigator {
+class NavHostSigInNavigator(private val mainContext: MainCoroutineContext) : SigInNavigator {
 
-    var destinationListener: (HomeDestination) -> Unit = {}
+    var destinationListener: (SignInDestination) -> Unit = {}
     var goBackListener: () -> Unit = {}
 
-    override fun navigateTo(destination: HomeDestination) {
+    override fun navigateTo(destination: SignInDestination) {
         mainContext.launch { destinationListener(destination) }
     }
 

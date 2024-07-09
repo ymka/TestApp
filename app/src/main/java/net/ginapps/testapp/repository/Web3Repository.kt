@@ -19,6 +19,7 @@ interface ConnectionRepository {
 }
 
 class DefaultWeb3Repository(
+    private val userRepository: UserRepository,
     private val ioCoroutineContext: IoCoroutineContext
 ) : Web3Repository, ConnectionRepository, Web3Modal.ModalDelegate {
     private val _state = MutableSharedFlow<Web3State>()
@@ -54,6 +55,10 @@ class DefaultWeb3Repository(
 
     override fun onSessionApproved(approvedSession: Modal.Model.ApprovedSession) {
         Timber.i("onSessionApproved: $approvedSession")
+        ioCoroutineContext.launch {
+            userRepository.fetchData()
+            _state.emit(Web3State.SessionApproved)
+        }
     }
 
     override fun onSessionDelete(deletedSession: Modal.Model.DeletedSession) {
