@@ -2,7 +2,6 @@ package net.ginapps.testapp.screen.home.account
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import net.ginapps.testapp.core.BaseViewModel
@@ -22,8 +21,8 @@ class AccountViewModel @Inject constructor(
     connectionRepository: ConnectionRepository,
     ioCoroutineContext: IoCoroutineContext,
 ) : BaseViewModel(connectionRepository, ioCoroutineContext) {
-    private val _address = MutableStateFlow("")
-    val address = _address.asStateFlow()
+    private val _user = MutableStateFlow(UserAccount.Authorized("", "", emptyList(), emptyList()))
+    val user = _user.asStateFlow()
 
     override fun launch() {
         super.launch()
@@ -31,7 +30,7 @@ class AccountViewModel @Inject constructor(
             userRepository.account.collect {
                 when (it) {
                     is UserAccount.Authorized -> {
-                        _address.value = it.address
+                        _user.value = it
                     }
 
                     is UserAccount.None -> {

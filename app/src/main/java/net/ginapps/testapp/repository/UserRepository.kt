@@ -10,6 +10,7 @@ import net.ginapps.testapp.AppError
 import net.ginapps.testapp.core.IoCoroutineContext
 import net.ginapps.testapp.core.Result
 import net.ginapps.testapp.core.execute
+import net.ginapps.testapp.data.Chain
 import net.ginapps.testapp.data.UserAccount
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -30,8 +31,17 @@ class Web3UserRepository(
     override suspend fun fetchData() {
         io.execute {
             val web3Account = Web3Modal.getAccount()
-            if (web3Account != null && Web3Modal.getSession() != null) {
-                _account.value = UserAccount.Authorized(web3Account.address)
+            val session = Web3Modal.getSession() as? Session.WalletConnectSession
+            if (web3Account != null && session != null) {
+                val (chains, methods) = session.namespaces[Chain.Eth.name]?.let {
+                    (it.chains ?: emptyList()) to it.methods
+                } ?: (emptyList<String>() to emptyList())
+                _account.value = UserAccount.Authorized(
+                    web3Account.address,
+                    session.pairingTopic,
+                    chains,
+                    methods
+                )
             }
         }
     }

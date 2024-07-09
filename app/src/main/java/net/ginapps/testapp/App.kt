@@ -7,7 +7,6 @@ import com.walletconnect.android.CoreClient
 import com.walletconnect.android.relay.ConnectionType
 import com.walletconnect.web3.modal.client.Modal
 import com.walletconnect.web3.modal.client.Web3Modal
-import com.walletconnect.web3.modal.presets.Web3ModalChainsPresets
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
@@ -28,7 +27,7 @@ class App : Application() {
         val connectionType = ConnectionType.AUTOMATIC
         val appMetaData = Core.Model.AppMetaData(
             name = "My Test Wallet",
-            description = "Some wallet description",
+            description = "My awesome wallet",
             url = "kotlin.wallet.walletconnect.com",
             icons = listOf("https://raw.githubusercontent.com/WalletConnect/walletconnect-assets/master/Icon/Gradient/Icon.png"),
             redirect = "kotlin-web3modal://request"
@@ -46,6 +45,5 @@ class App : Application() {
         Web3Modal.initialize(Modal.Params.Init(CoreClient)) { error ->
             Timber.e(error.throwable)
         }
-        Web3Modal.setChains(Web3ModalChainsPresets.ethChains.values.toList())
     }
 }

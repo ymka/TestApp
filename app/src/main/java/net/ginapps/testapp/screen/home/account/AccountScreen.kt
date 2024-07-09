@@ -1,7 +1,5 @@
 package net.ginapps.testapp.screen.home.account
 
-import androidx.compose.foundation.Indication
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,7 +33,7 @@ fun AccountScreen(
                 Text(
                     text = stringResource(
                         id = R.string.wallet_address,
-                        viewModel.address.collectAsState().value
+                        viewModel.user.collectAsState().value.address
                     )
                 )
                 Button(

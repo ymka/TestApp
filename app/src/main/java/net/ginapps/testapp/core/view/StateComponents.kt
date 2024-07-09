@@ -70,7 +70,9 @@ private fun getErrorText(context: Context, error: AppError): String {
     val stringId = when (error) {
         is AppError.NoInternet -> R.string.no_internet_error_message
         is AppError.Unexpected -> R.string.common_error_message
+        is AppError.SignMessageFailed -> R.string.sign_msg_error_message
         is AppError.LogOut -> R.string.common_error_message
+        is AppError.Unauthorized -> R.string.unauthorized_error_message
     }
 
     return context.getString(stringId)
