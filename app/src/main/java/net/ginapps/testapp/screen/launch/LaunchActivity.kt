@@ -4,11 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import dagger.hilt.android.AndroidEntryPoint
 import net.ginapps.testapp.core.BaseActivity
 import net.ginapps.testapp.core.ViewState
 import net.ginapps.testapp.screen.home.HomeActivity
 import net.ginapps.testapp.screen.signin.SignInActivity
 
+@AndroidEntryPoint
 class LaunchActivity : BaseActivity() {
 
     private val viewModel: LaunchViewModel by viewModels()

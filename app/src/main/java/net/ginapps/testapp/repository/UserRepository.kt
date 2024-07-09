@@ -1,5 +1,8 @@
 package net.ginapps.testapp.repository
 
+import com.walletconnect.android.Core
+import com.walletconnect.android.CoreClient
+import com.walletconnect.web3.modal.client.models.Session
 import com.walletconnect.web3.modal.client.Web3Modal
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -35,6 +38,10 @@ class Web3UserRepository(
 
     override suspend fun logOut(): Result<Unit> = io.execute {
         if (Web3Modal.getSession() != null && Web3Modal.getAccount() != null) {
+            (Web3Modal.getSession() as? Session.WalletConnectSession)?.let {
+                CoreClient.Pairing.disconnect(Core.Params.Disconnect(it.pairingTopic))
+            }
+
             suspendCoroutine<Result<Unit>> {
                 Web3Modal.disconnect(
                     onSuccess = {

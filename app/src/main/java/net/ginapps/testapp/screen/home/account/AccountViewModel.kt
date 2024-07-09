@@ -2,18 +2,23 @@ package net.ginapps.testapp.screen.home.account
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import net.ginapps.testapp.core.BaseViewModel
 import net.ginapps.testapp.core.IoCoroutineContext
 import net.ginapps.testapp.core.onError
+import net.ginapps.testapp.core.onSuccess
 import net.ginapps.testapp.data.UserAccount
 import net.ginapps.testapp.repository.ConnectionRepository
 import net.ginapps.testapp.repository.UserRepository
+import net.ginapps.testapp.screen.home.HomeDestination
+import net.ginapps.testapp.screen.home.HomeNavigator
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
     private val userRepository: UserRepository,
+    private val navigator: HomeNavigator,
     connectionRepository: ConnectionRepository,
     ioCoroutineContext: IoCoroutineContext,
 ) : BaseViewModel(connectionRepository, ioCoroutineContext) {
@@ -28,8 +33,9 @@ class AccountViewModel @Inject constructor(
                     is UserAccount.Authorized -> {
                         _address.value = it.address
                     }
-                    is UserAccount.None -> {
 
+                    is UserAccount.None -> {
+                        navigator.navigateTo(HomeDestination.SigIn)
                     }
                 }
             }
@@ -37,10 +43,14 @@ class AccountViewModel @Inject constructor(
     }
 
     fun logOut() {
-        launchOnMain {
-            userRepository.logOut().onError {
-                showError(it)
-            }
+        launchOnMainWithLoading {
+            executeOnIo { userRepository.logOut() }
+                .onSuccess {
+                    navigator.navigateTo(HomeDestination.SigIn)
+                }
+                .onError {
+                    showError(it)
+                }
         }
     }
 }
