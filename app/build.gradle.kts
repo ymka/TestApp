@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.compose.icons)
     implementation(libs.androidx.splashscreen)
     implementation(libs.logs)
+    implementation(libs.datetime)
     implementation(libs.bundles.hilt)
     ksp(libs.hilt.kapt)
     implementation(platform(libs.wallet.bom))

@@ -26,9 +26,9 @@ class App : Application() {
         val serverUrl = "wss://$relayUrl?projectId=$projectId"
         val connectionType = ConnectionType.AUTOMATIC
         val appMetaData = Core.Model.AppMetaData(
-            name = "My Test Wallet",
-            description = "My awesome wallet",
-            url = "kotlin.wallet.walletconnect.com",
+            name = "My Test App",
+            description = "It's my awesome test app",
+            url = "my.awesome.app.test",
             icons = listOf("https://raw.githubusercontent.com/WalletConnect/walletconnect-assets/master/Icon/Gradient/Icon.png"),
             redirect = "kotlin-web3modal://request"
         )

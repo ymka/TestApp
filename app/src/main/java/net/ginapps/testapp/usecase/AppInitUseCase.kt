@@ -14,7 +14,9 @@ class DefaultAppInitUseCase(
 ) : AppInitUseCase {
     override suspend fun run() {
         Web3ModalChainsPresets.ethChains["1"]?.let { chain ->
-            Web3Modal.setChains(listOf(chain))
+            val requiredMethods = chain.requiredMethods.toMutableList()
+            requiredMethods.add("eth_sign")
+            Web3Modal.setChains(listOf(chain.copy(requiredMethods = requiredMethods)))
         }
 
         Web3Modal.setDelegate(delegate)

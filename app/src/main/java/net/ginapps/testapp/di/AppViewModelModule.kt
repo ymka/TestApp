@@ -10,7 +10,7 @@ import net.ginapps.testapp.repository.UserRepository
 import net.ginapps.testapp.usecase.AppInitUseCase
 import net.ginapps.testapp.usecase.DefaultAppInitUseCase
 import net.ginapps.testapp.usecase.SIWEUseCase
-import net.ginapps.testapp.usecase.Web3ModalSIWEUseCase
+import net.ginapps.testapp.usecase.Web3ModalSIWERequestUseCase
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -25,5 +25,5 @@ object AppViewModelModule {
     @ViewModelScoped
     @Provides
     fun provideSIWEUseCase(userRepository: UserRepository): SIWEUseCase =
-        Web3ModalSIWEUseCase(userRepository)
+        Web3ModalSIWERequestUseCase(userRepository)
 }

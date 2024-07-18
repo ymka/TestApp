@@ -17,6 +17,7 @@ hilt-compose = "1.2.0"
 ksp = "2.0.0-1.0.22"
 #wallet connect
 walletConnectBom = "1.32.1"
+datetime = "0.6.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -36,14 +37,15 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 logs = { group = "com.jakewharton.timber", name = "timber", version.ref = "logs" }
+datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "datetime" }
 #hilt
 hilt-core = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt-core" }
 hilt-kapt = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt-core" }
 hilt-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-compose" }
 #wallet connect
-wallet-bom = { group = "com.walletconnect", name = "android-bom", version.ref = "walletConnectBom"}
-wallet-core = {group = "com.walletconnect", name = "android-core"}
-wallet-web3modal = {group = "com.walletconnect", name = "web3modal"}
+wallet-bom = { group = "com.walletconnect", name = "android-bom", version.ref = "walletConnectBom" }
+wallet-core = { group = "com.walletconnect", name = "android-core" }
+wallet-web3modal = { group = "com.walletconnect", name = "web3modal" }
 
 [bundles]
 hilt = ["hilt-core", "hilt-compose"]
