@@ -1,7 +1,6 @@
 package net.ginapps.testapp
 
 import android.app.Application
-import com.walletconnect.android.BuildConfig
 import com.walletconnect.android.Core
 import com.walletconnect.android.CoreClient
 import com.walletconnect.android.relay.ConnectionType
@@ -21,14 +20,14 @@ class App : Application() {
     }
 
     private fun initWeb3() {
-        val projectId = BuildConfig.PROJECT_ID
+        val projectId = BuildConfig.project_id
         val relayUrl = "relay.walletconnect.com"
         val serverUrl = "wss://$relayUrl?projectId=$projectId"
         val connectionType = ConnectionType.AUTOMATIC
         val appMetaData = Core.Model.AppMetaData(
             name = "My Test App",
             description = "It's my awesome test app",
-            url = "my.awesome.app.test",
+            url = BuildConfig.domain,
             icons = listOf("https://raw.githubusercontent.com/WalletConnect/walletconnect-assets/master/Icon/Gradient/Icon.png"),
             redirect = "kotlin-web3modal://request"
         )

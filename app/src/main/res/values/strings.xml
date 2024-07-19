@@ -6,6 +6,7 @@
     <string name="logout_error_message">Cannot Logout. Try again</string>
     <string name="sign_msg_error_message">Sign message failed</string>
     <string name="unauthorized_error_message">User is not authorized</string>
+    <string name="waiting_siwe_approve">Waiting SIWE approve</string>
     <string name="session_rejected">Session Rejected</string>
     <string name="ok">OK</string>
     <string name="wallet_address">"Address: %1$s"</string>

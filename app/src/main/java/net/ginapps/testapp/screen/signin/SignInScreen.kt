@@ -1,6 +1,7 @@
 package net.ginapps.testapp.screen.signin
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
@@ -66,33 +67,36 @@ fun SigInScreen(
             Button(
                 modifier = Modifier.padding(),
                 onClick = {
-                    openBottomSheet = true
+                    viewModel.signIn()
                 },
-                enabled = !viewModel.ctaLoading.collectAsState().value
+                enabled = !viewModel.signInLoading.collectAsState().value
             ) {
                 Text(text = stringResource(id = R.string.sig_in_screen_cta))
             }
 
-            if (viewModel.ctaLoading.collectAsState().value) {
+            if (viewModel.signInLoading.collectAsState().value) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(text = stringResource(id = R.string.waiting_siwe_approve))
+                        CircularProgressIndicator()
+                    }
                 }
             }
         }
 
-        if (openBottomSheet) {
+        if (viewModel.showBottomSheet.collectAsState().value) {
             // TODO: update sheet height when content changed
             ModalBottomSheet(
                 onDismissRequest = {
                     coroutineScope.launch {
-                        openBottomSheet = false
+                        viewModel.closeBottomSheet()
                     }
                 },
                 content = {
                     Web3ModalComponent(
                         shouldOpenChooseNetwork = false,
                         closeModal = {
-                            openBottomSheet = false
+                            viewModel.closeBottomSheet()
                         }
                     )
                 }

@@ -21,7 +21,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        buildConfigField("String", "wallet_project_id", "\"dc388a048b30379cb2d91efc08448077\"")
+        buildConfigField("String", "project_id", "\"dc388a048b30379cb2d91efc08448077\"")
+        buildConfigField("String", "domain", "\"my.awesome.app.test\"")
     }
     // TODO: use different flavors staging and prod
     buildTypes {
@@ -61,6 +62,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.preference)
     implementation(libs.compose.icons)
     implementation(libs.androidx.splashscreen)
     implementation(libs.logs)

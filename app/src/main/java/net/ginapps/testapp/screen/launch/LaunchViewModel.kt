@@ -31,7 +31,7 @@ class LaunchViewModel @Inject constructor(
             userRepository.account.collect {
                 val route = when (it) {
                     is UserAccount.Authorized -> Route.Home
-                    is UserAccount.None -> Route.Sign
+                    is UserAccount.None, UserAccount.SIWEWaiting -> Route.Sign
                 }
 
                 _state.value = ViewState.Success(route)

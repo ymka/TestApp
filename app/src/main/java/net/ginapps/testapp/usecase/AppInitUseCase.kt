@@ -14,11 +14,8 @@ class DefaultAppInitUseCase(
 ) : AppInitUseCase {
     override suspend fun run() {
         Web3ModalChainsPresets.ethChains["1"]?.let { chain ->
-            val requiredMethods = chain.requiredMethods.toMutableList()
-            requiredMethods.add("eth_sign")
-            Web3Modal.setChains(listOf(chain.copy(requiredMethods = requiredMethods)))
+            Web3Modal.setChains(listOf(chain))
         }
-
         Web3Modal.setDelegate(delegate)
         userRepository.fetchData()
     }

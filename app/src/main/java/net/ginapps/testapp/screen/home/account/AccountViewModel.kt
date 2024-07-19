@@ -13,15 +13,17 @@ import net.ginapps.testapp.repository.ConnectionRepository
 import net.ginapps.testapp.repository.UserRepository
 import net.ginapps.testapp.screen.home.HomeDestination
 import net.ginapps.testapp.screen.home.HomeNavigator
+import net.ginapps.testapp.usecase.LogOutUseCase
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
     private val userRepository: UserRepository,
+    private val logOutUseCase: LogOutUseCase,
     private val navigator: HomeNavigator,
     connectionRepository: ConnectionRepository,
     ioCoroutineContext: IoCoroutineContext,
 ) : BaseViewModel(connectionRepository, ioCoroutineContext) {
-    private val _user = MutableStateFlow(UserAccount.Authorized("", "", emptyList(), emptyList()))
+    private val _user = MutableStateFlow(UserAccount.Authorized(""))
     val user = _user.asStateFlow()
 
     override fun launch() {
@@ -33,7 +35,7 @@ class AccountViewModel @Inject constructor(
                         _user.value = it
                     }
 
-                    is UserAccount.None -> {
+                    is UserAccount.None, UserAccount.SIWEWaiting -> {
                         navigator.navigateTo(HomeDestination.SigIn)
                     }
                 }
@@ -43,7 +45,7 @@ class AccountViewModel @Inject constructor(
 
     fun logOut() {
         launchOnMainWithLoading {
-            executeOnIo { userRepository.logOut() }
+            executeOnIo { logOutUseCase.run() }
                 .onSuccess {
                     navigator.navigateTo(HomeDestination.SigIn)
                 }
